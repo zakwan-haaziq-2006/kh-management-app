@@ -17,9 +17,9 @@ export default defineConfig(({ mode }) => {
           registerType: 'autoUpdate',
           includeAssets: ['pwa-192x192.png', 'pwa-512x512.png', 'apple-touch-icon.png'],
           manifest: {
-            name: 'KH App',
-            short_name: 'KH App',
-            description: 'KH Student & Teacher Management Application',
+            name: 'MMES PUBLIC School',
+            short_name: 'MMES School',
+            description: 'MMES PUBLIC School Student & Teacher Management Application',
             theme_color: '#ffffff',
             background_color: '#ffffff',
             display: 'standalone',

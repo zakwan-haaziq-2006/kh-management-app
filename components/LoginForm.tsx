@@ -47,8 +47,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
         <div className="w-36 h-36 sm:w-44 sm:h-44 mb-4 relative flex items-center justify-center bg-white rounded-full shadow-xl p-3 border-4 border-white overflow-hidden">
           {!imgError ? (
             <img 
-              src="./kh-logo.png"
-              alt="School Logo" 
+              src="/mmes-logo.png"
+              alt="MMES PUBLIC School Logo" 
               className="w-full h-full object-contain"
               onError={() => setImgError(true)}
             />
@@ -59,23 +59,18 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
         
         <div className="space-y-1">
           <h1 className="text-xl sm:text-2xl font-black text-gray-900 leading-none">
-            K.H. MATRICULATION
+            MMES PUBLIC SCHOOL
           </h1>
           <p className="text-sm sm:text-lg font-bold text-gray-600 uppercase tracking-tight">
-            Boys Higher Secondary School
+            Empowering Minds, Building Futures
           </p>
-          <div className="inline-block px-3 py-0.5 bg-gray-100 rounded-full">
-            <p className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">
-              Then Nandiyalam
-            </p>
-          </div>
         </div>
       </header>
 
       {/* 2. Sleek Login Card */}
       <div className="w-full bg-white rounded-[2.5rem] shadow-2xl shadow-gray-200/80 border border-gray-50 overflow-hidden">
         {/* Active Theme Bar */}
-        <div className={`h-1.5 w-full transition-colors duration-500 ${isStudent ? 'bg-green-500' : 'bg-blue-600'}`}></div>
+        <div className={`h-1.5 w-full transition-colors duration-500`} style={{backgroundColor: isStudent ? '#3d6b10' : '#1a1a1a'}}></div>
 
         <div className="p-6 sm:p-8">
           {/* Professional Role Switcher (Pill Style) */}
@@ -140,9 +135,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
               isLoading={isLoading}
               className={`h-14 rounded-2xl text-base font-black transition-all transform active:scale-[0.98] shadow-lg ${
                 isStudent 
-                  ? 'bg-green-600 hover:bg-green-700 text-white shadow-green-200' 
-                  : 'bg-blue-600 hover:bg-blue-700 text-white shadow-blue-200'
+                  ? 'text-white shadow-green-200' 
+                  : 'text-white shadow-gray-300'
               }`}
+              style={{backgroundColor: isStudent ? '#3d6b10' : '#1a1a1a'}}
             >
               {isLoading ? 'SECURELY LOGGING IN...' : 'LOGIN TO DASHBOARD'}
             </Button>
@@ -159,7 +155,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
           </p>
         </div>
         <p className="text-[10px] font-bold text-gray-300 uppercase tracking-widest">
-          © {new Date().getFullYear()} K.H. School System
+          © {new Date().getFullYear()} MMES PUBLIC School
         </p>
       </footer>
     </div>

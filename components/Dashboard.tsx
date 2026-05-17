@@ -1491,7 +1491,7 @@ const ProfileModal: React.FC<{ user: User; onClose: () => void; onLogout: () => 
         </div>
         <h2 className="text-xl font-bold text-gray-900 text-center">{user.name}</h2>
         <span className={`px-3 py-1 rounded-full text-[11px] font-bold mt-2 tracking-wide uppercase ${
-          user.role === UserRole.STUDENT ? 'bg-green-100 text-green-700' : 'bg-purple-100 text-purple-700'
+          user.role === UserRole.STUDENT ? 'bg-mmes-pale text-mmes' : 'bg-gray-100 text-gray-700'
         }`}>
           {user.role}
         </span>
@@ -1732,28 +1732,33 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
   const pendingHomeworkCount = MOCK_HOMEWORK.filter(h => h.status === 'Pending').length;
 
   return (
-    <div className="min-h-screen bg-gray-50/50 pb-20 relative overflow-x-hidden">
+    <div className="min-h-screen pb-20 relative overflow-x-hidden" style={{backgroundColor: '#f5f7f2'}}>
       
-      {/* 1. Header Section */}
-      <header className="px-5 pt-8 pb-3 bg-white sticky top-0 z-30 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] rounded-b-[1.5rem]">
-        <div className="flex justify-between items-center mb-1">
-          <div className="flex flex-col">
-            <span className="text-gray-400 text-[11px] font-bold tracking-wider uppercase mb-0.5">{greeting},</span>
-            <h1 className="text-xl font-black text-gray-900 tracking-tight leading-none">
-              {user.name.split(' ')[0]}
-              <span className="text-green-600">.</span>
-            </h1>
+      {/* 1. Header Section — MMES Dark Gradient */}
+      <header className="px-5 pt-10 pb-5 mmes-header-grad sticky top-0 z-30 shadow-[0_4px_24px_-4px_rgba(26,26,26,0.45)] rounded-b-[1.75rem]">
+        <div className="flex justify-between items-center">
+          {/* Logo + School name */}
+          <div className="flex items-center gap-2.5">
+            <div className="w-9 h-9 rounded-xl overflow-hidden border-2 border-white/20 shadow-inner bg-white/10 flex items-center justify-center shrink-0">
+              <img src="/mmes-logo.png" alt="MMES" className="w-full h-full object-contain" />
+            </div>
+            <div>
+              <span className="text-white/50 text-[9px] font-bold tracking-[0.18em] uppercase block leading-none">{greeting},</span>
+              <h1 className="text-lg font-black text-white tracking-tight leading-tight">
+                {user.name.split(' ')[0]}<span className="text-mmes-gold">.</span>
+              </h1>
+            </div>
           </div>
           
           <div className="flex items-center gap-3">
-            <button className="relative p-2 rounded-full bg-gray-50 hover:bg-gray-100 transition-colors text-gray-600">
+            <button className="relative p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors text-white/80 hover:text-white">
               <Bell className="w-5 h-5" />
-              <span className="absolute top-2 right-2.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+              <span className="absolute top-1.5 right-2 w-2 h-2 bg-red-400 rounded-full border-2 border-transparent"></span>
             </button>
             
             <button 
               onClick={() => setIsProfileOpen(true)}
-              className="w-10 h-10 rounded-full border-2 border-white shadow-lg overflow-hidden transition-transform hover:scale-105 active:scale-95 focus:outline-none focus:ring-4 focus:ring-green-500/20"
+              className="w-10 h-10 rounded-full border-2 shadow-lg overflow-hidden transition-transform hover:scale-105 active:scale-95 focus:outline-none border-mmes-gold"
             >
               <img src={user.avatarUrl} alt="Profile" className="w-full h-full object-cover" />
             </button>
@@ -1778,7 +1783,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                   title="Attendance"
                   subtitle="View Reports"
                   icon={<Calendar />}
-                  colorClass="bg-green-500"
+                  colorClass="bg-mmes"
                   delay="delay-[100ms]"
                   onClick={() => setShowAttendance(true)}
                 />
@@ -1786,7 +1791,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                   title="Homework"
                   subtitle={`${pendingHomeworkCount} Pending`}
                   icon={<BookOpen />}
-                  colorClass="bg-purple-500"
+                  colorClass="bg-mmes-light"
                   delay="delay-[150ms]"
                   onClick={() => setShowHomework(true)}
                 />
@@ -1794,7 +1799,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                   title="Time Table"
                   subtitle="Class Schedule"
                   icon={<Clock />}
-                  colorClass="bg-blue-500"
+                  colorClass="bg-mmes"
                   delay="delay-[200ms]"
                   onClick={() => setShowTimetable(true)}
                 />
@@ -1802,7 +1807,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                   title="Results"
                   subtitle="Term Exams"
                   icon={<Award />}
-                  colorClass="bg-amber-500"
+                  colorClass="bg-mmes-gold"
                   delay="delay-[250ms]"
                   onClick={() => setShowResults(true)}
                 />
@@ -1810,7 +1815,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                   title="Assignments"
                   subtitle="Projects & Tasks"
                   icon={<ClipboardList />}
-                  colorClass="bg-pink-500"
+                  colorClass="bg-mmes-light"
                   delay="delay-[300ms]"
                   onClick={() => setShowAssignments(true)}
                 />
@@ -1818,7 +1823,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                   title="Fees"
                   subtitle="Payment Status"
                   icon={<CreditCard />}
-                  colorClass="bg-teal-500"
+                  colorClass="bg-mmes"
                   delay="delay-[350ms]"
                   onClick={() => setShowFees(true)}
                 />
@@ -1826,7 +1831,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                   title="Rank"
                   subtitle="Top Performers"
                   icon={<Trophy />}
-                  colorClass="bg-yellow-500"
+                  colorClass="bg-mmes-gold"
                   delay="delay-[400ms]"
                   onClick={() => setShowRank(true)}
                 />
@@ -1837,7 +1842,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                   title="Attendance"
                   subtitle="View Reports"
                   icon={<Calendar />}
-                  colorClass="bg-green-600"
+                  colorClass="bg-mmes"
                   delay="delay-[100ms]"
                   onClick={() => setShowAttendance(true)}
                 />
@@ -1845,7 +1850,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                   title="Time Table"
                   subtitle="Faculty Schedule"
                   icon={<Clock />}
-                  colorClass="bg-blue-500"
+                  colorClass="bg-mmes-light"
                   delay="delay-[150ms]"
                   onClick={() => setShowTimetable(true)}
                 />
@@ -1853,7 +1858,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                   title="Upload Homework"
                   subtitle="Assign Tasks"
                   icon={<Upload />}
-                  colorClass="bg-purple-500"
+                  colorClass="bg-mmes"
                   delay="delay-[200ms]"
                   onClick={() => setShowUploadHomework(true)}
                 />
@@ -1861,7 +1866,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                   title="Upload Marks"
                   subtitle="Results Entry"
                   icon={<Award />}
-                  colorClass="bg-amber-500"
+                  colorClass="bg-mmes-gold"
                   delay="delay-[250ms]"
                   onClick={() => setShowUploadMarks(true)}
                 />
@@ -1869,7 +1874,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                   title="Upload Assignment"
                   subtitle="Manage Projects"
                   icon={<ClipboardList />}
-                  colorClass="bg-pink-500"
+                  colorClass="bg-mmes-light"
                   delay="delay-[300ms]"
                   onClick={() => setShowAssignments(true)}
                 />
@@ -1918,20 +1923,15 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
         </section>
 
         {/* School Info Footer */}
-        <div className="flex items-center justify-center gap-2 mt-6 opacity-40 grayscale pb-6">
-          <div className="w-5 h-5 overflow-hidden">
-             {!imgError ? (
-               <img 
-                 src="kh-logo.png" 
-                 alt="Logo" 
-                 className="w-full h-full object-contain"
-                 onError={() => setImgError(true)} 
-               />
-             ) : (
-               <School className="w-4 h-4" />
-             )}
+        <div className="flex items-center justify-center gap-2.5 mt-6 pb-6">
+          <div className="w-6 h-6 overflow-hidden opacity-70">
+            <img 
+              src="/mmes-logo.png" 
+              alt="MMES Logo" 
+              className="w-full h-full object-contain"
+            />
           </div>
-          <span className="text-[10px] font-bold text-gray-600">K.H. Matriculation</span>
+          <span className="text-[10px] font-bold uppercase tracking-widest" style={{color: '#3d6b10', opacity: 0.7}}>MMES PUBLIC School</span>
         </div>
       </main>
 
