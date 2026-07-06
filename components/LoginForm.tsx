@@ -44,25 +44,30 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
       
       {/* 1. Unified Branding Header */}
       <header className="w-full flex flex-col items-center mb-6 text-center animate-in fade-in slide-in-from-top-4 duration-1000">
-        <div className="w-36 h-36 sm:w-44 sm:h-44 mb-4 relative flex items-center justify-center bg-white rounded-full shadow-xl p-3 border-4 border-white overflow-hidden">
-          {!imgError ? (
-            <img 
-              src="/mmes-logo.png"
-              alt="MMES PUBLIC School Logo" 
-              className="w-full h-full object-contain"
-              onError={() => setImgError(true)}
-            />
-          ) : (
-            <School className="w-16 h-16 text-gray-200" />
-          )}
+        <div className="relative mb-4 animate-floaty">
+          {/* twinkles around the logo */}
+          <span className="absolute -top-1 -left-2 text-2xl animate-twinkle">⭐</span>
+          <span className="absolute -bottom-1 -right-2 text-xl animate-twinkle" style={{ animationDelay: '1.2s' }}>✨</span>
+          <div className="w-36 h-36 sm:w-40 sm:h-40 relative flex items-center justify-center bg-white rounded-[2rem] shadow-xl shadow-sky-200/60 p-3 border-4 border-white overflow-hidden rotate-2">
+            {!imgError ? (
+              <img
+                src="/mmes-logo.png"
+                alt="MMES PUBLIC School Logo"
+                className="w-full h-full object-contain"
+                onError={() => setImgError(true)}
+              />
+            ) : (
+              <School className="w-16 h-16 text-gray-200" />
+            )}
+          </div>
         </div>
-        
+
         <div className="space-y-1">
-          <h1 className="text-xl sm:text-2xl font-black text-gray-900 leading-none">
-            MMES PUBLIC SCHOOL
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 leading-none">
+            MMES <span style={{ color: '#3d6b10' }}>PUBLIC</span> SCHOOL
           </h1>
-          <p className="text-sm sm:text-lg font-bold text-gray-600 uppercase tracking-tight">
-            Empowering Minds, Building Futures
+          <p className="text-sm sm:text-base font-bold text-gray-500">
+            Let's learn something awesome today! 🎒
           </p>
         </div>
       </header>
@@ -129,18 +134,18 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLoginSuccess }) => {
               </div>
             )}
 
-            <Button 
-              type="submit" 
-              fullWidth 
+            <Button
+              type="submit"
+              fullWidth
               isLoading={isLoading}
-              className={`h-14 rounded-2xl text-base font-black transition-all transform active:scale-[0.98] shadow-lg ${
-                isStudent 
-                  ? 'text-white shadow-green-200' 
+              className={`h-14 rounded-2xl text-base font-extrabold transition-all transform active:scale-[0.96] hover:-translate-y-0.5 shadow-lg ${
+                isStudent
+                  ? 'text-white shadow-green-200'
                   : 'text-white shadow-gray-300'
               }`}
               style={{backgroundColor: isStudent ? '#3d6b10' : '#1a1a1a'}}
             >
-              {isLoading ? 'SECURELY LOGGING IN...' : 'LOGIN TO DASHBOARD'}
+              {isLoading ? 'Getting ready… 🚀' : (isStudent ? "Let's Go! 🎉" : 'Login to Dashboard')}
             </Button>
           </form>
         </div>

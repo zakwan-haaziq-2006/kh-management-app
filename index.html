@@ -14,7 +14,9 @@
     <meta name="apple-mobile-web-app-title" content="MMES School" />
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
       /* ---- MMES Brand Colors ---- */
       :root {
@@ -25,11 +27,27 @@
         --mmes-black:       #1a1a1a; /* Logo banner black */
         --mmes-gold:        #c9a227; /* Logo star gold */
         --mmes-gold-pale:   #fdf6e0;
+
+        /* ---- Playful kid palette ---- */
+        --kid-coral:  #ff6b6b;
+        --kid-orange: #ff9f43;
+        --kid-yellow: #ffd23f;
+        --kid-sky:    #4dabf7;
+        --kid-grape:  #9775fa;
+        --kid-mint:   #20c997;
+        --kid-pink:   #f783ac;
       }
 
       body {
-        font-family: 'Inter', sans-serif;
-        background-color: #f5f7f2; /* Slightly warm gray-green tint */
+        font-family: 'Nunito', sans-serif;
+        background-color: #f4f8ff; /* soft playful sky tint */
+      }
+
+      /* Chunky rounded display font for headings & buttons */
+      h1, h2, h3, h4,
+      .font-display {
+        font-family: 'Baloo 2', 'Nunito', cursive;
+        letter-spacing: -0.01em;
       }
 
       /* MMES utility classes */
@@ -71,6 +89,50 @@
       }
       .animate-zoom-in {
           animation: zoomIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+
+      /* ---- Playful kid animations ---- */
+      @keyframes floaty {
+          0%, 100% { transform: translateY(0); }
+          50%      { transform: translateY(-10px); }
+      }
+      .animate-floaty { animation: floaty 4s ease-in-out infinite; }
+
+      @keyframes wiggle {
+          0%, 100% { transform: rotate(-4deg); }
+          50%      { transform: rotate(4deg); }
+      }
+      .animate-wiggle { animation: wiggle 2.5s ease-in-out infinite; }
+
+      @keyframes pop-in {
+          0%   { opacity: 0; transform: scale(0.6) translateY(12px); }
+          60%  { opacity: 1; transform: scale(1.06) translateY(-2px); }
+          100% { opacity: 1; transform: scale(1) translateY(0); }
+      }
+      .animate-pop-in {
+          opacity: 0;
+          animation: pop-in 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+      }
+
+      @keyframes blob-drift {
+          0%, 100% { transform: translate(0, 0) scale(1); }
+          33%      { transform: translate(20px, -18px) scale(1.08); }
+          66%      { transform: translate(-16px, 14px) scale(0.95); }
+      }
+      .animate-blob { animation: blob-drift 14s ease-in-out infinite; }
+
+      @keyframes twinkle {
+          0%, 100% { opacity: 0.2; transform: scale(0.8); }
+          50%      { opacity: 1;   transform: scale(1.2); }
+      }
+      .animate-twinkle { animation: twinkle 3s ease-in-out infinite; }
+
+      /* Fun chunky drop-shadow used on kid cards */
+      .kid-card-shadow { box-shadow: 0 10px 22px -8px rgba(0,0,0,0.28); }
+
+      @media (prefers-reduced-motion: reduce) {
+          .animate-floaty, .animate-wiggle, .animate-blob,
+          .animate-twinkle { animation: none; }
       }
     </style>
   <script type="importmap">

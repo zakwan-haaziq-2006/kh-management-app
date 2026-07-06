@@ -46,26 +46,31 @@ const FeatureCard: React.FC<{
   title: string;
   subtitle: string;
   icon: React.ReactNode;
-  colorClass: string;
-  delay?: string;
+  gradient: string;
+  emoji?: string;
+  delayMs?: number;
   onClick?: () => void;
-}> = ({ title, subtitle, icon, colorClass, delay = '0', onClick }) => (
-  <button 
+}> = ({ title, subtitle, icon, gradient, emoji, delayMs = 0, onClick }) => (
+  <button
     onClick={onClick}
-    className={`relative group overflow-hidden bg-white p-3 rounded-xl shadow-sm border border-gray-100 text-left transition-all duration-300 hover:shadow-md hover:-translate-y-1 active:scale-95 animate-in fade-in slide-in-from-bottom-4 fill-mode-backwards ${delay} w-full`}
+    style={{ animationDelay: `${delayMs}ms` }}
+    className={`relative group overflow-hidden bg-gradient-to-br ${gradient} p-4 rounded-3xl kid-card-shadow text-left transition-all duration-300 hover:-translate-y-1.5 hover:rotate-1 active:scale-95 animate-pop-in w-full aspect-[1/0.92]`}
   >
-    <div className={`absolute right-0 top-0 w-16 h-16 -mr-4 -mt-4 rounded-full opacity-10 ${colorClass}`}></div>
+    {/* playful bubbles */}
+    <div className="absolute -right-5 -top-5 w-20 h-20 rounded-full bg-white/25"></div>
+    <div className="absolute right-6 top-8 w-8 h-8 rounded-full bg-white/20"></div>
+    {emoji && (
+      <span className="absolute top-2.5 right-3 text-lg opacity-90 transition-transform duration-300 group-hover:scale-125 group-hover:rotate-12">{emoji}</span>
+    )}
+
     <div className="relative z-10 flex flex-col h-full justify-between gap-2">
-      <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${colorClass} bg-opacity-10 text-opacity-100`}>
-        {React.cloneElement(icon as React.ReactElement<{ className?: string }>, { className: `w-4 h-4 ${colorClass.replace('bg-', 'text-')}` })}
+      <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-white/30 backdrop-blur-sm shadow-inner transition-transform duration-300 group-hover:scale-110 group-active:scale-95">
+        {React.cloneElement(icon as React.ReactElement<{ className?: string }>, { className: 'w-6 h-6 text-white drop-shadow' })}
       </div>
       <div>
-        <h3 className="text-sm font-bold text-gray-900 leading-tight mb-0.5">{title}</h3>
-        <p className="text-[10px] text-gray-500 font-medium">{subtitle}</p>
+        <h3 className="text-base font-extrabold text-white leading-tight drop-shadow-sm">{title}</h3>
+        <p className="text-[11px] text-white/90 font-bold">{subtitle}</p>
       </div>
-    </div>
-    <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-2 group-hover:translate-x-0">
-      <ChevronRight className="w-3 h-3 text-gray-400" />
     </div>
   </button>
 );
@@ -99,7 +104,7 @@ const AttendanceModal: React.FC<{ percentage: number; onClose: () => void }> = (
             <div className={`p-2 rounded-xl ${bgClass} bg-opacity-60`}>
                 <Calendar className={`w-4 h-4 ${colorClass}`} />
             </div>
-            Attendance
+            Attendance 📅
           </h2>
           <button 
             onClick={onClose} 
@@ -198,10 +203,10 @@ const AttendanceModal: React.FC<{ percentage: number; onClose: () => void }> = (
 
 const HomeworkModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
-    <div className="fixed inset-0 z-[60] bg-gray-50 flex flex-col animate-zoom-in origin-center">
+    <div className="fixed inset-0 z-[60] bg-gradient-to-b from-[#eef4ff] via-white to-[#fdf1f7] flex flex-col animate-zoom-in origin-center">
       
-      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-purple-500 rounded-full opacity-10 blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-64 h-64 -ml-16 -mb-16 bg-indigo-500 rounded-full opacity-10 blur-3xl pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-purple-500 rounded-full opacity-10 blur-3xl pointer-events-none animate-blob"></div>
+      <div className="absolute bottom-0 left-0 w-64 h-64 -ml-16 -mb-16 bg-indigo-500 rounded-full opacity-10 blur-3xl pointer-events-none animate-blob"></div>
 
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-md sticky top-0 z-20 px-5 pt-12 pb-4 border-b border-gray-100 shadow-sm">
@@ -212,7 +217,7 @@ const HomeworkModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             </div>
             <div>
                 <h2 className="text-xl font-black text-gray-900 tracking-tight leading-none">
-                    Homework
+                    Homework 📚
                 </h2>
                 <p className="text-xs font-medium text-gray-500 mt-0.5">Assigned Tasks & Deadlines</p>
             </div>
@@ -306,9 +311,9 @@ const TimetableModal: React.FC<{ user: User; onClose: () => void }> = ({ user, o
   const periods = getSubjectsForDay(selectedDay);
 
   return (
-    <div className="fixed inset-0 z-[60] bg-gray-50 flex flex-col animate-zoom-in origin-center">
-      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-blue-500 rounded-full opacity-10 blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-64 h-64 -ml-16 -mb-16 bg-sky-500 rounded-full opacity-10 blur-3xl pointer-events-none"></div>
+    <div className="fixed inset-0 z-[60] bg-gradient-to-b from-[#eef4ff] via-white to-[#fdf1f7] flex flex-col animate-zoom-in origin-center">
+      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-blue-500 rounded-full opacity-10 blur-3xl pointer-events-none animate-blob"></div>
+      <div className="absolute bottom-0 left-0 w-64 h-64 -ml-16 -mb-16 bg-sky-500 rounded-full opacity-10 blur-3xl pointer-events-none animate-blob"></div>
 
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-md sticky top-0 z-20 pt-12 pb-2 border-b border-gray-100 shadow-sm">
@@ -319,7 +324,7 @@ const TimetableModal: React.FC<{ user: User; onClose: () => void }> = ({ user, o
             </div>
             <div>
                 <h2 className="text-xl font-black text-gray-900 tracking-tight leading-none">
-                    Time Table
+                    Time Table ⏰
                 </h2>
                 <p className="text-xs font-medium text-gray-500 mt-0.5">Class {className} Schedule</p>
             </div>
@@ -420,9 +425,9 @@ const ResultsModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const results = selectedExam ? getExamResults(selectedExam) : [];
 
   return (
-    <div className="fixed inset-0 z-[60] bg-gray-50 flex flex-col animate-zoom-in origin-center">
-      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-amber-500 rounded-full opacity-10 blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-64 h-64 -ml-16 -mb-16 bg-orange-500 rounded-full opacity-10 blur-3xl pointer-events-none"></div>
+    <div className="fixed inset-0 z-[60] bg-gradient-to-b from-[#eef4ff] via-white to-[#fdf1f7] flex flex-col animate-zoom-in origin-center">
+      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-amber-500 rounded-full opacity-10 blur-3xl pointer-events-none animate-blob"></div>
+      <div className="absolute bottom-0 left-0 w-64 h-64 -ml-16 -mb-16 bg-orange-500 rounded-full opacity-10 blur-3xl pointer-events-none animate-blob"></div>
 
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-md sticky top-0 z-20 pt-12 pb-4 border-b border-gray-100 shadow-sm px-5">
@@ -551,9 +556,9 @@ const AssignmentsModal: React.FC<{ user: User; onClose: () => void }> = ({ user,
   ];
 
   return (
-    <div className="fixed inset-0 z-[60] bg-gray-50 flex flex-col animate-zoom-in origin-center">
-      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-pink-500 rounded-full opacity-10 blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-64 h-64 -ml-16 -mb-16 bg-rose-500 rounded-full opacity-10 blur-3xl pointer-events-none"></div>
+    <div className="fixed inset-0 z-[60] bg-gradient-to-b from-[#eef4ff] via-white to-[#fdf1f7] flex flex-col animate-zoom-in origin-center">
+      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-pink-500 rounded-full opacity-10 blur-3xl pointer-events-none animate-blob"></div>
+      <div className="absolute bottom-0 left-0 w-64 h-64 -ml-16 -mb-16 bg-rose-500 rounded-full opacity-10 blur-3xl pointer-events-none animate-blob"></div>
 
       <div className="bg-white/80 backdrop-blur-md sticky top-0 z-20 px-5 pt-12 pb-4 border-b border-gray-100 shadow-sm">
         <div className="flex justify-between items-center">
@@ -620,8 +625,8 @@ const FeesModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const totalFee = feeStructure.reduce((acc, item) => acc + parseInt(item.amount.replace(/[^0-9]/g, '')), 0);
 
   return (
-    <div className="fixed inset-0 z-[60] bg-gray-50 flex flex-col animate-zoom-in origin-center">
-      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-teal-500 rounded-full opacity-10 blur-3xl pointer-events-none"></div>
+    <div className="fixed inset-0 z-[60] bg-gradient-to-b from-[#eef4ff] via-white to-[#fdf1f7] flex flex-col animate-zoom-in origin-center">
+      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-teal-500 rounded-full opacity-10 blur-3xl pointer-events-none animate-blob"></div>
       
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-md sticky top-0 z-20 px-5 pt-12 pb-2 border-b border-gray-100 shadow-sm">
@@ -631,7 +636,7 @@ const FeesModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 <CreditCard className="w-6 h-6" />
             </div>
             <div>
-                <h2 className="text-xl font-black text-gray-900 tracking-tight leading-none">Fees</h2>
+                <h2 className="text-xl font-black text-gray-900 tracking-tight leading-none">Fees 💰</h2>
                 <p className="text-xs font-medium text-gray-500 mt-0.5">Finance & Records</p>
             </div>
           </div>
@@ -827,9 +832,9 @@ const EventsModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   ];
 
   return (
-    <div className="fixed inset-0 z-[60] bg-gray-50 flex flex-col animate-zoom-in origin-center">
-      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-red-500 rounded-full opacity-10 blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-64 h-64 -ml-16 -mb-16 bg-orange-500 rounded-full opacity-10 blur-3xl pointer-events-none"></div>
+    <div className="fixed inset-0 z-[60] bg-gradient-to-b from-[#eef4ff] via-white to-[#fdf1f7] flex flex-col animate-zoom-in origin-center">
+      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-red-500 rounded-full opacity-10 blur-3xl pointer-events-none animate-blob"></div>
+      <div className="absolute bottom-0 left-0 w-64 h-64 -ml-16 -mb-16 bg-orange-500 rounded-full opacity-10 blur-3xl pointer-events-none animate-blob"></div>
 
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-md sticky top-0 z-20 px-5 pt-12 pb-4 border-b border-gray-100 shadow-sm">
@@ -839,7 +844,7 @@ const EventsModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 <MapPin className="w-6 h-6" />
             </div>
             <div>
-                <h2 className="text-xl font-black text-gray-900 tracking-tight leading-none">Upcoming Events</h2>
+                <h2 className="text-xl font-black text-gray-900 tracking-tight leading-none">Upcoming Events 🎉</h2>
                 <p className="text-xs font-medium text-gray-500 mt-0.5">School Calendar & Activities</p>
             </div>
           </div>
@@ -954,9 +959,9 @@ const CircularsModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const recentCirculars = allCirculars.filter(c => c.rawDate >= oneWeekAgo);
 
   return (
-    <div className="fixed inset-0 z-[60] bg-gray-50 flex flex-col animate-zoom-in origin-center">
-      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-indigo-500 rounded-full opacity-10 blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-64 h-64 -ml-16 -mb-16 bg-violet-500 rounded-full opacity-10 blur-3xl pointer-events-none"></div>
+    <div className="fixed inset-0 z-[60] bg-gradient-to-b from-[#eef4ff] via-white to-[#fdf1f7] flex flex-col animate-zoom-in origin-center">
+      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-indigo-500 rounded-full opacity-10 blur-3xl pointer-events-none animate-blob"></div>
+      <div className="absolute bottom-0 left-0 w-64 h-64 -ml-16 -mb-16 bg-violet-500 rounded-full opacity-10 blur-3xl pointer-events-none animate-blob"></div>
 
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-md sticky top-0 z-20 px-5 pt-12 pb-4 border-b border-gray-100 shadow-sm">
@@ -975,7 +980,7 @@ const CircularsModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 </div>
              )}
             <div>
-                <h2 className="text-xl font-black text-gray-900 tracking-tight leading-none">Circulars</h2>
+                <h2 className="text-xl font-black text-gray-900 tracking-tight leading-none">Circulars 📢</h2>
                 <p className="text-xs font-medium text-gray-500 mt-0.5">
                     {selectedCircular ? 'Detailed View' : 'Last 7 Days Updates'}
                 </p>
@@ -1124,8 +1129,8 @@ const UploadHomeworkModal: React.FC<{ onClose: () => void }> = ({ onClose }) => 
   };
 
   return (
-    <div className="fixed inset-0 z-[60] bg-gray-50 flex flex-col animate-zoom-in origin-center">
-      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-purple-500 rounded-full opacity-10 blur-3xl pointer-events-none"></div>
+    <div className="fixed inset-0 z-[60] bg-gradient-to-b from-[#eef4ff] via-white to-[#fdf1f7] flex flex-col animate-zoom-in origin-center">
+      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-purple-500 rounded-full opacity-10 blur-3xl pointer-events-none animate-blob"></div>
       
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-md sticky top-0 z-20 px-5 pt-12 pb-4 border-b border-gray-100 shadow-sm">
@@ -1280,8 +1285,8 @@ const UploadMarksModal: React.FC<{ user: User; onClose: () => void }> = ({ user,
   };
 
   return (
-    <div className="fixed inset-0 z-[60] bg-gray-50 flex flex-col animate-zoom-in origin-center">
-      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-amber-500 rounded-full opacity-10 blur-3xl pointer-events-none"></div>
+    <div className="fixed inset-0 z-[60] bg-gradient-to-b from-[#eef4ff] via-white to-[#fdf1f7] flex flex-col animate-zoom-in origin-center">
+      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-amber-500 rounded-full opacity-10 blur-3xl pointer-events-none animate-blob"></div>
       
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-md sticky top-0 z-20 px-5 pt-12 pb-4 border-b border-gray-100 shadow-sm">
@@ -1440,14 +1445,14 @@ const UploadMarksModal: React.FC<{ user: User; onClose: () => void }> = ({ user,
 
 const CamConnectModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
-    <div className="fixed inset-0 z-[70] bg-gray-50 flex flex-col animate-in slide-in-from-bottom duration-300">
+    <div className="fixed inset-0 z-[70] bg-gradient-to-b from-[#eef4ff] via-white to-[#fdf1f7] flex flex-col animate-in slide-in-from-bottom duration-300">
        <div className="bg-white border-b border-gray-100 px-5 py-4 flex justify-between items-center sticky top-0 z-10 shadow-sm">
           <div className="flex items-center gap-2">
-             <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+             <div className="p-2 bg-indigo-50 text-indigo-600 rounded-xl">
                 <Users className="w-5 h-5" />
              </div>
              <div>
-               <h2 className="text-lg font-bold text-gray-900">Community</h2>
+               <h2 className="text-lg font-bold text-gray-900">Community 🎪</h2>
                <p className="text-xs text-gray-500 font-medium">Student Achievements</p>
              </div>
           </div>
@@ -1455,14 +1460,14 @@ const CamConnectModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             <X className="w-5 h-5 text-gray-600" />
           </button>
        </div>
-       
-       <div className="flex-1 flex flex-col items-center justify-center p-8 text-center opacity-60">
-          <div className="w-24 h-24 bg-indigo-50 rounded-full flex items-center justify-center mb-6">
-             <Award className="w-10 h-10 text-indigo-400" />
+
+       <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
+          <div className="w-28 h-28 bg-gradient-to-br from-violet-400 to-indigo-500 rounded-[2rem] flex items-center justify-center mb-6 kid-card-shadow animate-floaty rotate-3">
+             <Award className="w-12 h-12 text-white drop-shadow" />
           </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">School Community Feed</h3>
-          <p className="text-sm text-gray-500 max-w-xs leading-relaxed">
-            A professional space for students to showcase achievements and connect with peers. Feature coming soon.
+          <h3 className="text-2xl font-extrabold text-gray-900 mb-2">Coming Soon! 🚀</h3>
+          <p className="text-sm text-gray-500 max-w-xs leading-relaxed font-semibold">
+            A fun space to show off your awesome work and cheer on your friends. Stay tuned! ⭐
           </p>
        </div>
     </div>
@@ -1476,7 +1481,7 @@ const ProfileModal: React.FC<{ user: User; onClose: () => void; onLogout: () => 
       onClick={(e) => e.stopPropagation()}
     >
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-lg font-bold text-gray-900">Student Identity</h2>
+        <h2 className="text-lg font-bold text-gray-900">My Profile 🙂</h2>
         <button 
           onClick={onClose} 
           className="p-2 bg-gray-50 border border-gray-100 rounded-full hover:bg-gray-100 active:scale-95 transition-all cursor-pointer shadow-sm text-gray-500 hover:text-gray-900"
@@ -1486,7 +1491,7 @@ const ProfileModal: React.FC<{ user: User; onClose: () => void; onLogout: () => 
       </div>
 
       <div className="flex flex-col items-center mb-6">
-        <div className="w-24 h-24 rounded-full border-4 border-white shadow-xl overflow-hidden mb-3 relative">
+        <div className="w-24 h-24 rounded-[1.75rem] border-4 border-white shadow-xl overflow-hidden mb-3 relative rotate-3 ring-4 ring-amber-300/40">
            <img src={user.avatarUrl} alt={user.name} className="w-full h-full object-cover" />
         </div>
         <h2 className="text-xl font-bold text-gray-900 text-center">{user.name}</h2>
@@ -1569,9 +1574,9 @@ const RankModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[60] bg-gray-50 flex flex-col animate-zoom-in origin-center">
-      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-yellow-500 rounded-full opacity-10 blur-3xl pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-64 h-64 -ml-16 -mb-16 bg-orange-500 rounded-full opacity-10 blur-3xl pointer-events-none"></div>
+    <div className="fixed inset-0 z-[60] bg-gradient-to-b from-[#eef4ff] via-white to-[#fdf1f7] flex flex-col animate-zoom-in origin-center">
+      <div className="absolute top-0 right-0 w-80 h-80 -mr-20 -mt-20 bg-yellow-500 rounded-full opacity-10 blur-3xl pointer-events-none animate-blob"></div>
+      <div className="absolute bottom-0 left-0 w-64 h-64 -ml-16 -mb-16 bg-orange-500 rounded-full opacity-10 blur-3xl pointer-events-none animate-blob"></div>
 
       {/* Header */}
       <div className="bg-white/80 backdrop-blur-md sticky top-0 z-20 px-5 pt-12 pb-4 border-b border-gray-100 shadow-sm">
@@ -1743,9 +1748,9 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
               <img src="/mmes-logo.png" alt="MMES" className="w-full h-full object-contain" />
             </div>
             <div>
-              <span className="text-white/50 text-[9px] font-bold tracking-[0.18em] uppercase block leading-none">{greeting},</span>
-              <h1 className="text-lg font-black text-white tracking-tight leading-tight">
-                {user.name.split(' ')[0]}<span className="text-mmes-gold">.</span>
+              <span className="text-white/60 text-[9px] font-bold tracking-[0.18em] uppercase block leading-none">{greeting} 👋</span>
+              <h1 className="text-lg font-extrabold text-white tracking-tight leading-tight">
+                {user.name.split(' ')[0]}<span className="text-mmes-gold">!</span>
               </h1>
             </div>
           </div>
@@ -1771,111 +1776,123 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
         {/* 2. Academics Grid */}
         <section>
           <div className="flex items-center justify-between mb-3 px-1">
-            <h2 className="text-base font-bold text-gray-800">
-              {user.role === UserRole.STUDENT ? 'Academics' : 'Faculty Tools'}
+            <h2 className="text-lg font-extrabold text-gray-800">
+              {user.role === UserRole.STUDENT ? '🎨 My Learning' : '🧑‍🏫 Faculty Tools'}
             </h2>
           </div>
           
-          <div className="grid grid-cols-2 gap-2.5">
+          <div className="grid grid-cols-2 gap-3">
             {user.role === UserRole.STUDENT ? (
               <>
-                <FeatureCard 
+                <FeatureCard
                   title="Attendance"
                   subtitle="View Reports"
                   icon={<Calendar />}
-                  colorClass="bg-mmes"
-                  delay="delay-[100ms]"
+                  gradient="from-sky-400 to-blue-500"
+                  emoji="📅"
+                  delayMs={60}
                   onClick={() => setShowAttendance(true)}
                 />
-                <FeatureCard 
+                <FeatureCard
                   title="Homework"
-                  subtitle={`${pendingHomeworkCount} Pending`}
+                  subtitle={`${pendingHomeworkCount} to do`}
                   icon={<BookOpen />}
-                  colorClass="bg-mmes-light"
-                  delay="delay-[150ms]"
+                  gradient="from-violet-400 to-purple-500"
+                  emoji="📚"
+                  delayMs={120}
                   onClick={() => setShowHomework(true)}
                 />
-                <FeatureCard 
+                <FeatureCard
                   title="Time Table"
                   subtitle="Class Schedule"
                   icon={<Clock />}
-                  colorClass="bg-mmes"
-                  delay="delay-[200ms]"
+                  gradient="from-teal-400 to-emerald-500"
+                  emoji="⏰"
+                  delayMs={180}
                   onClick={() => setShowTimetable(true)}
                 />
-                <FeatureCard 
+                <FeatureCard
                   title="Results"
                   subtitle="Term Exams"
                   icon={<Award />}
-                  colorClass="bg-mmes-gold"
-                  delay="delay-[250ms]"
+                  gradient="from-amber-400 to-orange-500"
+                  emoji="🌟"
+                  delayMs={240}
                   onClick={() => setShowResults(true)}
                 />
-                <FeatureCard 
+                <FeatureCard
                   title="Assignments"
                   subtitle="Projects & Tasks"
                   icon={<ClipboardList />}
-                  colorClass="bg-mmes-light"
-                  delay="delay-[300ms]"
+                  gradient="from-pink-400 to-rose-500"
+                  emoji="✏️"
+                  delayMs={300}
                   onClick={() => setShowAssignments(true)}
                 />
-                <FeatureCard 
+                <FeatureCard
                   title="Fees"
                   subtitle="Payment Status"
                   icon={<CreditCard />}
-                  colorClass="bg-mmes"
-                  delay="delay-[350ms]"
+                  gradient="from-lime-400 to-green-500"
+                  emoji="💰"
+                  delayMs={360}
                   onClick={() => setShowFees(true)}
                 />
-                <FeatureCard 
+                <FeatureCard
                   title="Rank"
                   subtitle="Top Performers"
                   icon={<Trophy />}
-                  colorClass="bg-mmes-gold"
-                  delay="delay-[400ms]"
+                  gradient="from-yellow-400 to-amber-500"
+                  emoji="🏆"
+                  delayMs={420}
                   onClick={() => setShowRank(true)}
                 />
               </>
             ) : (
               <>
-                <FeatureCard 
+                <FeatureCard
                   title="Attendance"
                   subtitle="View Reports"
                   icon={<Calendar />}
-                  colorClass="bg-mmes"
-                  delay="delay-[100ms]"
+                  gradient="from-sky-400 to-blue-500"
+                  emoji="📅"
+                  delayMs={60}
                   onClick={() => setShowAttendance(true)}
                 />
-                <FeatureCard 
+                <FeatureCard
                   title="Time Table"
                   subtitle="Faculty Schedule"
                   icon={<Clock />}
-                  colorClass="bg-mmes-light"
-                  delay="delay-[150ms]"
+                  gradient="from-teal-400 to-emerald-500"
+                  emoji="⏰"
+                  delayMs={120}
                   onClick={() => setShowTimetable(true)}
                 />
-                <FeatureCard 
+                <FeatureCard
                   title="Upload Homework"
                   subtitle="Assign Tasks"
                   icon={<Upload />}
-                  colorClass="bg-mmes"
-                  delay="delay-[200ms]"
+                  gradient="from-violet-400 to-purple-500"
+                  emoji="📚"
+                  delayMs={180}
                   onClick={() => setShowUploadHomework(true)}
                 />
-                <FeatureCard 
+                <FeatureCard
                   title="Upload Marks"
                   subtitle="Results Entry"
                   icon={<Award />}
-                  colorClass="bg-mmes-gold"
-                  delay="delay-[250ms]"
+                  gradient="from-amber-400 to-orange-500"
+                  emoji="🌟"
+                  delayMs={240}
                   onClick={() => setShowUploadMarks(true)}
                 />
-                <FeatureCard 
+                <FeatureCard
                   title="Upload Assignment"
                   subtitle="Manage Projects"
                   icon={<ClipboardList />}
-                  colorClass="bg-mmes-light"
-                  delay="delay-[300ms]"
+                  gradient="from-pink-400 to-rose-500"
+                  emoji="✏️"
+                  delayMs={300}
                   onClick={() => setShowAssignments(true)}
                 />
               </>
@@ -1886,36 +1903,36 @@ export const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
         {/* 3. Community & Campus */}
         <section>
           <div className="flex items-center justify-between mb-3 px-1">
-            <h2 className="text-base font-bold text-gray-800">Community & Campus</h2>
+            <h2 className="text-lg font-extrabold text-gray-800">🎪 Community & Campus</h2>
           </div>
           
           <div className="space-y-3">
              {/* Upcoming Events */}
-             <button 
+             <button
                 onClick={() => setShowEvents(true)}
-                className="w-full bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-98"
+                className="w-full bg-white p-3.5 rounded-3xl shadow-sm border border-gray-100 flex items-center gap-3 transition-transform hover:scale-[1.02] hover:-translate-y-0.5 active:scale-98"
              >
-                <div className="w-10 h-10 rounded-xl bg-red-50 text-red-500 flex items-center justify-center shrink-0">
+                <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-rose-400 to-red-500 text-white flex items-center justify-center shrink-0 shadow-md">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div className="flex-1 text-left">
-                  <h3 className="text-sm font-bold text-gray-900">Upcoming Events</h3>
-                  <p className="text-[11px] text-gray-500">Annual Sports Day • Next Friday</p>
+                  <h3 className="text-sm font-extrabold text-gray-900">Upcoming Events 🎉</h3>
+                  <p className="text-[11px] text-gray-500 font-semibold">Annual Sports Day • Next Friday</p>
                 </div>
                 <ChevronRight className="w-4 h-4 text-gray-300" />
              </button>
 
              {/* Circulars - Full Width */}
-             <button 
+             <button
                onClick={() => setShowCirculars(true)}
-               className="w-full bg-white p-3.5 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3 transition-transform hover:scale-[1.02] active:scale-98"
+               className="w-full bg-white p-3.5 rounded-3xl shadow-sm border border-gray-100 flex items-center gap-3 transition-transform hover:scale-[1.02] hover:-translate-y-0.5 active:scale-98"
              >
-                <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+                <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-violet-400 to-indigo-500 text-white flex items-center justify-center shrink-0 shadow-md">
                   <FileText className="w-5 h-5" />
                 </div>
                 <div className="flex-1 text-left">
-                  <h3 className="text-sm font-bold text-gray-900">Circulars</h3>
-                  <p className="text-[11px] text-gray-500">Official Notices & Updates</p>
+                  <h3 className="text-sm font-extrabold text-gray-900">Circulars 📢</h3>
+                  <p className="text-[11px] text-gray-500 font-semibold">Official Notices & Updates</p>
                 </div>
                 <ChevronRight className="w-4 h-4 text-gray-300" />
              </button>
